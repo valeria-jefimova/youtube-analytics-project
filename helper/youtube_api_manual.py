@@ -16,7 +16,7 @@ youtube = build('youtube', 'v3', developerKey=api_key)
 
 def printj(dict_to_print: dict) -> None:
     """Выводит словарь в json-подобном удобном формате с отступами"""
-    printj(json.dumps(dict_to_print, indent=2, ensure_ascii=False))
+    print(json.dumps(dict_to_print, indent=2, ensure_ascii=False))
 
 
 '''
@@ -28,7 +28,7 @@ docs: https://developers.google.com/youtube/v3/docs/channels/list
 # channel_id = 'UCMCgOm8GZkHp8zJ6l7_hIuA'  # вДудь
 channel_id = 'UC1eFXmJNkjITxPFWTy6RsWg'  # Редакция
 channel = youtube.channels().list(id=channel_id, part='snippet,statistics').execute()
-print(channel)
+printj(channel)
 
 
 '''
