@@ -10,11 +10,36 @@ class Channel:
 
     def __init__(self, channel_id: str) -> None:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
-        self.channel_id = channel_id
-
+        self.__channel_id = channel_id
+        self.channel = self.youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
+        self.title = self.channel['items'][0]['snippet']['title']
+        self.video_count = self.channel['items'][0]['statistics']['videoCount']
+        self.subscriber_count = self.channel['items'][0]['statistics']['subscriberCount']
+        self.view_count = self.channel['items'][0]['statistics']['viewCount']
+        self.url = f'https://www.youtube.com/channel/{self.__channel_id}'
 
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
-        channel = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
         print(json.dumps(channel, indent=2, ensure_ascii=False))
 
+    @property
+    def channel_id(self):
+        return self.__channel_id
+
+    @channel_id.setter
+    def channel_id(self, channel_id):
+        raise AttributeError("Channel_id' of 'Channel' object has no setter")
+
+    @classmethod
+    def get_service(cls):
+        """
+        Класс-метод, возвращающий объект для работы с YouTube API
+        """
+        return cls.youtube
+
+    def to_json(self, file_name: str) -> None:
+        """
+        Метод, сохраняющий в файл значения атрибутов экземпляра `Channel`
+        """
+        with open(file_name, 'w', encoding='utf-8') as file_json:
+            json.dump(self.__dict__, file_json, ensure_ascii=False)
