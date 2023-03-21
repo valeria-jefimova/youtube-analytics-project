@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "youtube-analytics-project"
+version = "0.1.0"
+description = ""
+authors = ["valeria-jefimova <108732968+valeria-jefimova@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "youtube_analytics_project"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
