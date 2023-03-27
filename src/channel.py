@@ -2,6 +2,8 @@ import json
 import os
 from googleapiclient.discovery import build
 
+from helper.youtube_api_manual import channel
+
 
 class Channel:
     """Класс для ютуб-канала"""
@@ -43,3 +45,30 @@ class Channel:
         """
         with open(file_name, 'w', encoding='utf-8') as file_json:
             json.dump(self.__dict__, file_json, ensure_ascii=False)
+
+    def __str__(self):
+        return f'{self.title} ({self.url})'
+
+    def __add__(self, other):
+        """
+        Магический метод для сложения (сравнения кол-во подписчиков)
+        """
+        return int(self.view_count) + int(other.view_count)
+
+    def __sub__(self, other):
+        """
+        Магический метод для вычитания (сравнение кол-во подписчиков)
+        """
+        return int(self.view_count) - int(other.view_count)
+
+    def __rsub__(self, other):
+        """
+        Магический метод отраженного вычитания (сравнение кол-во подписчиков)
+        """
+        return int(other.view_count) - int(self.view_count)
+
+    def __ge__(self, other):
+        """
+        Магический метод для сравнения >= (сравнение кол-во подписчиков
+        """
+        return int(self.view_count) >= int(other.view_count)
