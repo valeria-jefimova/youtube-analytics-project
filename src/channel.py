@@ -1,5 +1,6 @@
 import json
 import os
+
 from googleapiclient.discovery import build
 
 
@@ -13,7 +14,7 @@ class Channel:
         self.__channel_id = channel_id
         self.__channel = self.youtube.channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         self.__title = self.__channel['items'][0]['snippet']['title']
-        self.__description = self.__channel['items'][0]['snippet']['title']
+        # self.__description = self.__channel['items'][0]['snippet']['title']
         self.__url = f'https://www.youtube.com/channel/{self.__channel_id}'
         self.__subscriber_count = self.__channel['items'][0]['statistics']['subscriberCount']
         self.__video_count = self.__channel['items'][0]['statistics']['videoCount']
@@ -59,6 +60,12 @@ class Channel:
     def __sub__(self, other: 'Channel') -> int:
         """
         Магический метод для вычитания (сравнение кол-во подписчиков)
+        """
+        return self.__subscriber_count - other.__subscriber_count
+
+    def __rsub__(self, other):
+        """
+        Магический метод отраженного вычитания (сравнение кол-во подписчиков)
         """
         return self.__subscriber_count - other.__subscriber_count
 
